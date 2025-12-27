@@ -13,12 +13,11 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image (Minikube)') {
+        stage('Build Image Inside Minikube') {
             steps {
                 sh '''
-                     eval $(minikube -p minikube docker-env --shell bash)
-                     DOCKER_BUILDKIT=0 docker build -t ${IMAGE_NAME} .
-                   '''
+                  minikube image build -t devops-app:latest .
+                '''
             }
         }
 
@@ -31,4 +30,14 @@ pipeline {
             }
         }
     }
+
+    post {
+        success {
+            echo "✅ Jenkins CI/CD pipeline completed successfully"
+        }
+        failure {
+            echo "❌ Jenkins CI/CD pipeline failed"
+        }
+    }
 }
+
