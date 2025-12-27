@@ -16,9 +16,9 @@ pipeline {
         stage('Build Docker Image (Minikube)') {
             steps {
                 sh '''
-                  eval $(minikube docker-env)
-                  DOCKER_BUILDKIT=0 docker build -t ${IMAGE_NAME} .
-                '''
+                     eval $(minikube -p minikube docker-env --shell bash)
+                     DOCKER_BUILDKIT=0 docker build -t ${IMAGE_NAME} .
+                   '''
             }
         }
 
